@@ -69,7 +69,7 @@ Replace `http://localhost:3000` with your public URL for external access.
 - **POST /signup**: `https://psychic-robot-9grrjx77jxf7pvq-3000.app.github.dev/signup` - Register user
 - **POST /login**: `https://psychic-robot-9grrjx77jxf7pvq-3000.app.github.dev/login` - Login user
 - **POST /forgot-password**: `https://psychic-robot-9grrjx77jxf7pvq-3000.app.github.dev/forgot-password` - Request password reset
-- **POST /resend-email**: `https://psychic-robot-9grrjx77jxf7pvq-3000.app.github.dev/resend-email` - Resend email
+- **POST /refresh**: `https://psychic-robot-9grrjx77jxf7pvq-3000.app.github.dev/refresh` - Refresh access token
 
 #### Protected Endpoints (Require Authorization: Bearer <token>)
 - **GET /profile**: `https://[public-url]:3000/profile` - Get user profile
@@ -88,9 +88,16 @@ Replace `http://localhost:3000` with your public URL for external access.
 - Response: JSON `{ "id": 1, "message": "User created" }`
 
 #### POST /login
-- Description: Authenticate user
+- Description: Authenticate user and get JWT tokens
 - Body: JSON `{"email": "user@example.com", "password": "password"}`
-- Response: JSON `{ "token": "jwt_token", "user": {...} }`
+- Response: JSON `{ "accessToken": "jwt_access_token", "refreshToken": "jwt_refresh_token", "user": {...} }`
+- Access Token Expires: 15 minutes
+- Refresh Token Expires: 7 days
+
+#### POST /refresh
+- Description: Refresh access token using refresh token
+- Body: JSON `{"refreshToken": "refresh_token_here"}`
+- Response: JSON `{ "accessToken": "new_jwt_access_token", "refreshToken": "new_jwt_refresh_token" }`
 
 #### POST /forgot-password
 - Description: Request password reset
@@ -101,6 +108,11 @@ Replace `http://localhost:3000` with your public URL for external access.
 - Description: Resend verification or reset email
 - Body: JSON `{"email": "user@example.com", "type": "reset"}`
 - Response: JSON `{ "message": "Email resent" }`
+
+#### POST /refresh
+- Description: Refresh access token using refresh token
+- Body: JSON `{"refreshToken": "refresh_token_here"}`
+- Response: JSON `{ "accessToken": "new_jwt_access_token", "refreshToken": "new_jwt_refresh_token" }`
 
 ### Protected Endpoints (Require Authorization Header: Bearer <token>)
 
@@ -124,6 +136,7 @@ Replace `http://localhost:3000` with your public URL for external access.
 - `name`: TEXT NOT NULL
 - `email`: TEXT UNIQUE NOT NULL
 - `password`: TEXT NOT NULL (hashed)
+- `refresh_token`: TEXT
 - `reset_token`: TEXT
 - `reset_expires`: TIMESTAMP
 - `created_at`: TIMESTAMP DEFAULT CURRENT_TIMESTAMP

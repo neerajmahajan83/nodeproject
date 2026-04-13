@@ -1,0 +1,43 @@
+TODO: Run project and database setup
+
+1. Install dependencies
+   npm install
+
+2. Start PostgreSQL database
+   sudo service postgresql start
+   sudo service postgresql status
+
+3. Create the database and user (if not already created)
+   psql -U postgres -c "CREATE DATABASE mydb;"
+   psql -U postgres -c "CREATE USER myuser WITH PASSWORD 'mypassword';"
+   psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE mydb TO myuser;"
+
+4. Create or update the users table schema
+   node Dbconnection.js
+
+5. Start the Node.js server
+   npm start
+
+6. Test signup (replace with your details)
+   curl -X POST http://localhost:3000/signup -H "Content-Type: application/json" -d '{"name":"Your Name","email":"your@email.com","password":"yourpassword"}'
+
+7. Test login (use the email and password from signup)
+   curl -X POST http://localhost:3000/login -H "Content-Type: application/json" -d '{"email":"your@email.com","password":"yourpassword"}'
+   # This will return accessToken and refreshToken (access expires in 15 min, refresh in 7 days)
+
+8. Test refresh token (use the refreshToken from login response)
+   curl -X POST http://localhost:3000/refresh -H "Content-Type: application/json" -d '{"refreshToken":"your_refresh_token_here"}'
+
+9. Test protected routes (use accessToken from login or refresh)
+   curl -H "Authorization: Bearer your_access_token" http://localhost:3000/profile
+
+10. For public access in Codespaces, forward port 3000 in the Ports panel and set visibility to Public.
+
+6. Access the app
+   Local: http://localhost:3000
+   Codespaces public URL: forward port 3000 in VS Code Ports panel and use the generated URL.
+
+7. Test signup endpoint
+   curl -X POST http://localhost:3000/signup \
+     -H "Content-Type: application/json" \
+     -d '{"name":"User Name","email":"user@example.com","password":"password"}'
