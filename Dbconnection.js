@@ -1,10 +1,14 @@
 const { Pool } = require('pg');
 const pool = new Pool({
-  user: 'myuser',
-  host: 'localhost',
-  database: 'mydb',
-  password: 'mypassword',
+  user: 'postgres',
+  host: 'nodedb.cs9kgqus0xgt.us-east-1.rds.amazonaws.com',
+  database: 'postgres',
+  password: 'NWbccwH9oTWumEU64PnY',
   port: 5432,
+  ssl: {
+        // This forces encryption and prevents the pg_hba.conf error
+        rejectUnauthorized: false 
+    }
 });
 
 // Create table with full schema

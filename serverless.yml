@@ -1,0 +1,20 @@
+service: nodeproject
+
+provider:
+  name: aws
+  runtime: nodejs22.x
+  region: us-east-1
+
+functions:
+  api:
+    handler: lambda.handler
+    timeout: 30
+
+    events:
+      - http:
+          path: /
+          method: any
+
+      - http:
+          path: /{proxy+}
+          method: any

@@ -43,6 +43,23 @@ A minimal Node.js project using Express.js and PostgreSQL.
    node Dbconnection.js
    ```
 
+## How to Run
+
+To run the application locally:
+
+```bash
+npm install
+npm start
+```
+
+Then open `http://localhost:3000` in your browser or call the API endpoints with a tool like Postman.
+
+> If you want to deploy to AWS Lambda with Serverless, configure AWS credentials first and then run:
+>
+> ```bash
+> serverless deploy
+> ```
+
 ## Usage
 
 1. Start the server:

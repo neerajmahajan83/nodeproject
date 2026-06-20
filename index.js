@@ -8,13 +8,18 @@ const port = process.env.PORT || 3000;
 const JWT_SECRET = 'your_jwt_secret'; // In production, use env variable
 const REFRESH_SECRET = 'your_refresh_secret'; // Different secret for refresh tokens
 
+
 // Connect to database
 const pool = new Pool({
-  user: 'myuser',
-  host: 'localhost',
-  database: 'mydb',
-  password: 'mypassword',
+  user: 'postgres',
+  host: 'nodedb.cs9kgqus0xgt.us-east-1.rds.amazonaws.com',
+  database: 'postgres',
+  password: 'NWbccwH9oTWumEU64PnY',
   port: 5432,
+  ssl: {
+        // This forces encryption and prevents the pg_hba.conf error
+        rejectUnauthorized: false 
+    }
 });
 
 // Email transporter (dummy for demo)
@@ -210,7 +215,10 @@ app.get('/users', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
+/*
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server is running on http://localhost:${port}`);
-});
+});*/
+
+// Export Express app for Lambda wrapper
+module.exports = app;
