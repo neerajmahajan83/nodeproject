@@ -12,9 +12,9 @@ const REFRESH_SECRET = 'your_refresh_secret'; // Different secret for refresh to
 // Connect to database
 const pool = new Pool({
   user: 'postgres',
-  host: 'nodedb.cs9kgqus0xgt.us-east-1.rds.amazonaws.com',
+  host: '*************************************************',
   database: 'postgres',
-  password: 'NWbccwH9oTWumEU64PnY',
+  password: '******************',
   port: 5432,
   ssl: {
         // This forces encryption and prevents the pg_hba.conf error
